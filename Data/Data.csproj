@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Contexts\Databases\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>
