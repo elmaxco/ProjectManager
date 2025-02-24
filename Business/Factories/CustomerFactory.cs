@@ -5,13 +5,13 @@ namespace Business.Factories;
 
 public class CustomerFactory
 {
-    public static CustomerEntity? Create(CustomerRegistrationForm form) => form == null ? null : new()
+    public static ConditionEntity? Create(CustomerRegistrationForm form) => form == null ? null : new()
     {
         CustomerName = form.CustomerName,
         Email = form.Email
     };
 
-    public static Customer? Create(CustomerEntity entity)
+    public static Customer? Create(ConditionEntity entity)
     {
         if (entity == null)
             return null;

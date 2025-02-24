@@ -4,7 +4,7 @@ namespace Data.Entities;
 
 
 [Index(nameof(Email), IsUnique = true)]
-public class CustomerEntity
+public class ConditionEntity
 {
     public int Id { get; set; }
     public string CustomerName { get; set; } = null!;
