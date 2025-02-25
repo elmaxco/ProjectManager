@@ -15,6 +15,8 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     {
         try
         {
+            ArgumentNullException.ThrowIfNull(entity);
+
             await _db.AddAsync(entity);
             await _context.SaveChangesAsync();
             return true;

@@ -4,54 +4,71 @@ using Business.Interfaces;
 using Business.Models;
 using Data.Entities;
 using Data.Interfaces;
+using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace Business.Services;
 
-public class ProjectService(IProjectRepository projectRepository, ICustomerRepository customerRepository) : IProjectService
+public class ProjectService(IProjectRepository projectRepository)
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
-    private readonly ICustomerRepository _customerRepository = customerRepository;
 
-    public async Task<bool> CreateProjectAsync(ProjectRegistarationForm form)
+    public async Task<Project?> CreateProjectAsync(ProjectRegistarationForm form)
     {
-        if (!await _customerRepository.ExistAsync(customer => customer.Id == form.CustomerId))
-            return false;
+        try
+        {
+            ArgumentNullException.ThrowIfNull(form);
 
-        var projectEntity = ProjectFactory.Create(form);
-        if (projectEntity == null)
-            return false;
+            var projectEntity = ProjectFactory.Map(form);
 
-        bool result = await _projectRepository.AddAsync(projectEntity);
-        return result;
+            if (projectEntity == null)
+                return null;
+
+            var isAdded = await _projectRepository.AddAsync(projectEntity);
+
+            if (!isAdded)
+                return null;
+
+            var project = ProjectFactory.Map(projectEntity);
+            return project;
+
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null;
+        }
     }
 
-    public async Task<IEnumerable<Project?>> GetProjectsAsync() 
+    public async Task<Project?> GetProjectsAsync(int id) 
     {
-        var entities = await _projectRepository.GetAllAsync();
-        var projects = entities.Select(ProjectFactory.Create);
+        var projectEntity = await _projectRepository.GetAsync(p => p.Id == id);
+        if (projectEntity == null)
+            return null;
+
+        var projects = ProjectFactory.Map(projectEntity);
         return projects;
     }
-    public async Task<Project?> GetProjectAsync(Expression <Func<ProjectEntity, bool>>expression) 
-    {
-        var entity = await _projectRepository.GetAsync(expression);
-        var project = ProjectFactory.Create(entity);
-        return project ?? null!;
-    }
-    public async Task<bool> UpdateProjectAsync(Project project)
-    {
-        var entity = ProjectFactory.Create(project);
-        if (entity == null)
-            return false;
-        bool result = await _projectRepository.UpdateAsync(entity);
-        return result;
-    }
-    public async Task<bool> DeleteProjectAsync(int id)
-    {
-        var project = await _projectRepository.GetAsync(x => x.Id == id);
-        if (project != null)
-        { return await _projectRepository.RemoveAsync(project); }
-        return false;
-        
-    }
+
+
+
+    // public async Task<Project?> GetProjectsAsync(string projectName)
+    // {
+    //     var projectEntity = await _projectRepository.GetAsync(p => p.ProjectName == projectName);
+    //     if (projectEntity == null)
+    //         return null;
+
+    //     var projects = ProjectFactory.Map(projectEntity);
+    //     return projects;
+    // } 
+
+    // public async Task<Project?> GetProjectByCustomerIdAsync(int customerId)
+    // {
+    //     var projectEntity = await _projectRepository.GetAsync(p => p.CustomerId == customerId);
+    //     if (projectEntity == null)
+    //         return null;
+
+    //     var projects = ProjectFactory.Map(projectEntity);
+    //     return projects;
+    // }
 }
