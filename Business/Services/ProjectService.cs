@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 
 namespace Business.Services;
 
-public class ProjectService(IProjectRepository projectRepository)
+public class ProjectService(IProjectRepository projectRepository) : IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
 
@@ -40,7 +40,7 @@ public class ProjectService(IProjectRepository projectRepository)
         }
     }
 
-    public async Task<Project?> GetProjectsAsync(int id) 
+    public async Task<Project?> GetProjectsAsync(int id)
     {
         var projectEntity = await _projectRepository.GetAsync(p => p.Id == id);
         if (projectEntity == null)
@@ -48,6 +48,50 @@ public class ProjectService(IProjectRepository projectRepository)
 
         var projects = ProjectFactory.Map(projectEntity);
         return projects;
+    }
+
+    public async Task<bool> UpdateProjectAsync(Project project)
+    {
+        try
+        {
+            ArgumentNullException.ThrowIfNull(project);
+
+            var projectEntity = ProjectFactory.Map(project);
+
+            if (projectEntity == null)
+                return false;
+
+            var result = await _projectRepository.UpdateAsync(projectEntity);
+            return result;
+
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
+    }
+
+    public async Task<bool> DeleteProjectAsync(Project project)
+    {
+        try
+        {
+            ArgumentNullException.ThrowIfNull(project);
+
+            var projectEntity = ProjectFactory.Map(project);
+
+            if (projectEntity == null)
+                return false;
+
+            var result = await _projectRepository.RemoveAsync(projectEntity);
+            return result;
+
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
     }
 
 
@@ -70,5 +114,6 @@ public class ProjectService(IProjectRepository projectRepository)
 
     //     var projects = ProjectFactory.Map(projectEntity);
     //     return projects;
-    // }
+    //
 }
+    
