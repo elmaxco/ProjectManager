@@ -2,7 +2,6 @@
 
 namespace Data.Interfaces;
 
-public interface ICustomerRepository : IBaseRepository<ConditionEntity> 
+public interface ICustomerRepository : IBaseRepository<CustomerEntity> 
 {
-
 }

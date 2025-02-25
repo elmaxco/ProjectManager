@@ -2,7 +2,6 @@
 
 namespace Data.Interfaces;
 
-public interface IStatusRepository : IBaseRepository<ConditionEntity>
+public interface IStatusRepository : IBaseRepository<StatusEntity>
 {
-
 }

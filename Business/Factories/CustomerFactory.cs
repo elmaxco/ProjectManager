@@ -1,43 +1,15 @@
-﻿using Business.Models;
+﻿using Business.Dtos;
+using Business.Models;
 using Data.Entities;
 
 namespace Business.Factories;
 
-public class CustomerFactory
+public static class CustomerFactory
 {
-    public static ConditionEntity? Create(CustomerRegistrationForm form) => form == null ? null : new()
+    public static Customer? Map(CustomerEntity entity) => entity == null ? null : new Customer
     {
-        CustomerName = form.CustomerName,
-        Email = form.Email
+        Id = entity.Id,
+        CustomerName = entity.CustomerName
+
     };
-
-    public static Customer? Create(ConditionEntity entity)
-    {
-        if (entity == null)
-            return null;
-
-        var customer = new Customer()
-        {
-            Id = entity.Id,
-            CustomerName = entity.CustomerName,
-            Email = entity.Email,
-            Projects = []
-        };
-
-        if (entity.Projects != null)
-        {
-            var projects = new List<Project>();
-
-            foreach (var project in entity.Projects)
-                projects.Add(new Project
-                {
-                    Id = project.Id,                    
-                    Description = project.Description
-                    
-                });
-            customer.Projects = projects;
-        }
-
-        return customer;
-    }
 }

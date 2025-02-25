@@ -6,5 +6,4 @@ namespace Data.Repositories;
 
 public class StatusRepository(DataContext context) : BaseRepository<ConditionEntity>(context), IStatusRepository
 { 
-
 }

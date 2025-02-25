@@ -9,11 +9,10 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
 {
     private readonly ICustomerRepository _customerRepository = customerRepository;
 
-
     public async Task<IEnumerable<Customer?>> GetCustomerAsync()
     {
         var entities = await _customerRepository.GetAllAsync();
-        var customers = entities.Select(CustomerFactory.Create);
-        return customers;
+        return entities.Select(CustomerFactory.Map);
     }
+
 }

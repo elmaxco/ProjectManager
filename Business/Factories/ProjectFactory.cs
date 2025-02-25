@@ -1,43 +1,73 @@
-﻿using Business.Models;
+﻿using Business.Dtos;
+using Business.Models;
 using Data.Entities;
+using System.Diagnostics;
 
 
 namespace Business.Factories;
 
-public class ProjectFactory
+public static class ProjectFactory
 {
-    public static ProjectEntity? Create(ProjectRegistarationForm form) => form == null ? null : new()
+    public static ProjectEntity? Map(ProjectRegistarationForm form) => form == null ? null : new ProjectEntity
     {
         ProjectName = form.ProjectName,
         Description = form.Description,
-        CustomerId = form.CustomerId
+        StartDate = form.StartDate,
+        EndDate = form.EndDate,
+        StatusId = form.StatusId,
+        CustomerId = form.CustomerId,
+        ProjectManagerId = form.ProjectManagerId,
+        ProjectTypeId = form.ProjectTypeId
     };
 
-    public static Project? Create(ProjectEntity entity) 
+
+
+    public static Project? Map(ProjectEntity entity) => entity == null ? null : new Project
+
     {
-        if (entity == null)
-            return null;
+        Id = entity.Id,
+        ProjectName = entity.ProjectName,
+        Description = entity.Description,
+        StartDate = entity.StartDate,
+        EndDate = entity.EndDate,
+        Status = StatusFactory.Map(entity.Status),
+        Customer = CustomerFactory.Map(entity.Customer),
+        ProjectManager = EmployeeFactory.Map(entity.ProjectManager),
+        ProjectType = ProjectTypeFactory.Map(entity.ProjectType)
+
+    };
 
 
-        var project = new Project()
+    public static ProjectEntity? Map(Project project)
+    {
+        try
         {
-            Id = entity.Id,
-            ProjectName = entity.ProjectName,
-            Description = entity.Description,           
-        };
+            ArgumentNullException.ThrowIfNull(project);
 
-        if (entity.Customer != null)
-        {
-            project.Customer = new Customer
+            var entity = new ProjectEntity
             {
-                Id = entity.Customer.Id,
-                CustomerName = entity.Customer.CustomerName,
-                Email = entity.Customer.Email
+                Id = project.Id,
+                ProjectName = project.ProjectName,
+                Description = project.Description,
+                StartDate = project.StartDate,
+                EndDate = project.EndDate,
+                StatusId = project.Status!.Id,
+                CustomerId = project.Customer!.Id,
+                ProjectManagerId = project.ProjectManager!.Id,
+                ProjectTypeId = project.ProjectType!.Id
             };
+            return entity;
         }
-
-        return project;
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null;
+        }
     }
-
 }
+
+    
+  
+
+   
 

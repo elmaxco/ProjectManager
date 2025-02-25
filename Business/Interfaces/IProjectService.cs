@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿using Business.Dtos;
+using Business.Models;
 
 namespace Business.Interfaces
 {
@@ -6,5 +7,8 @@ namespace Business.Interfaces
     {
         Task<bool> CreateProjectAsync(ProjectRegistarationForm form);
         Task<IEnumerable<Project?>> GetProjectsAsync();
+        Task<Project?> GetProjectByIdAsync(int id);
+        Task<bool> UpdateProjectAsync(int id, ProjectRegistarationForm form);
+        Task<bool> DeleteProjectAsync(int id);
     }
 }

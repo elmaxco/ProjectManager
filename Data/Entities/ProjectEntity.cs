@@ -6,7 +6,9 @@ public class ProjectEntity
     public string ProjectName { get; set; } = null!;
     public string? Description { get; set; }
     public int CustomerId { get; set; }
-    public ConditionEntity Customer { get; set; } = null!;
+    public DateTime StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
+    public CustomerEntity Customer { get; set; } = null!;
     public StatusEntity Status { get; set; } = null!;
     public int StatusId { get; set; }
     public int ProjectManagerId { get; set; }
