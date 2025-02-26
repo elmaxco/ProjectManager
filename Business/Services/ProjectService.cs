@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 
 namespace Business.Services;
 
-public class ProjectService(IProjectRepository projectRepository) : IProjectService
+public class ProjectService(IProjectRepository projectRepository) : IProjectService, IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
 
@@ -38,6 +38,13 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
             Debug.WriteLine(ex.Message);
             return null;
         }
+    }
+
+    public async Task<IEnumerable<Project?>> GetProjectsAsync()
+    {
+        var projectEntities = await _projectRepository.GetAllAsync();
+        var projects = projectEntities.Select(ProjectFactory.Map);
+        return projects;
     }
 
     public async Task<Project?> GetProjectsAsync(int id)

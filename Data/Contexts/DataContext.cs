@@ -13,9 +13,9 @@ public class DataContext : DbContext
     {
     }
 
-    public DbSet<ConditionEntity> Customer { get; set; }
+    public DbSet<CustomerEntity> Customer { get; set; }
     public DbSet<EmployeeEntity> Employee { get; set; }
     public DbSet<ProjectEntity> Project { get; set; }
     public DbSet<ProjectTypeEntity> ProjectType { get; set; }
-    public DbSet<ConditionEntity> Statuses { get; set; }
+    public DbSet<StatusEntity> Statuses { get; set; }
 }
