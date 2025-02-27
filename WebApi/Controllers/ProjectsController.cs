@@ -60,9 +60,5 @@ public class ProjectsController(IProjectService projectService) : ControllerBase
         var result = await _projectService.DeleteProjectAsync(project);
         return result ? Ok() : BadRequest();
     }
-
-
-
-
 }
    
