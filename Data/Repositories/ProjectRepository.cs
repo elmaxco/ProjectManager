@@ -31,14 +31,21 @@ public class ProjectRepository(DataContext context) : BaseRepository<ProjectEnti
 
     public override async Task<ProjectEntity?> GetAsync(Expression<Func<ProjectEntity, bool>> expression)
     {
-        var entity = await _db
-            .Include(x => x.Customer)
-            .Include(x => x.ProjectManager)
-            .Include(x => x.ProjectType)
-            .Include(x => x.Status)
-            .FirstOrDefaultAsync(expression);
-
-        return entity;
+        try
+        {
+            var entity = await _context.Project
+                .Include(x => x.Customer)
+                .Include(x => x.ProjectManager)
+                .Include(x => x.ProjectType)
+                .Include(x => x.Status)
+                .FirstOrDefaultAsync();
+            return entity;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null;
+        }
     }
 }
 

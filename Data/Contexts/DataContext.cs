@@ -18,4 +18,6 @@ public class DataContext : DbContext
     public DbSet<ProjectEntity> Project { get; set; }
     public DbSet<ProjectTypeEntity> ProjectType { get; set; }
     public DbSet<StatusEntity> Statuses { get; set; }
+
+
 }

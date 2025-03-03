@@ -11,15 +11,57 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     protected readonly DataContext _context = context;
     protected readonly DbSet<TEntity> _db = context.Set<TEntity>();
 
-    public virtual async Task<bool> AddAsync(TEntity entity)
+    public virtual async Task<TEntity?> AddAsync(TEntity entity)
     {
         try
         {
             ArgumentNullException.ThrowIfNull(entity);
 
-            await _db.AddAsync(entity);
+            _db.Add(entity);
             await _context.SaveChangesAsync();
-            return true;
+            return entity;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null;
+        }
+    }
+
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+    {
+        try
+        {
+            var entities = await _db.ToListAsync();
+            return entities;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return [];
+        }
+    }
+
+    public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression)
+    {
+        try
+        {
+            var entity = await _db.FirstOrDefaultAsync(expression);
+            return entity;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null;
+        }
+    }
+
+    public virtual async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression)
+    {
+        try
+        {
+            var result = await _db.AnyAsync(expression);
+            return result;
         }
         catch (Exception ex)
         {
@@ -28,35 +70,19 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         }
     }
 
-    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
-    {
-        var entities = await _db.ToListAsync();
-        return entities;
-    }
-
-    public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression)
-    {
-        var entity = await _db.FirstOrDefaultAsync(expression);
-        return entity;
-    }
-
-    public virtual async Task<bool> ExistAsync(Expression<Func<TEntity, bool>> expression)
-    {
-        var result = await _db.AnyAsync(expression);
-        return result;
-    }
-
     public virtual async Task<bool> UpdateAsync(TEntity entity)
     {
         try
         {
+            ArgumentNullException.ThrowIfNull(entity);
+
             _db.Update(entity);
             await _context.SaveChangesAsync();
             return true;
         }
         catch (Exception ex)
         {
-            Debug.WriteLine(ex.Message);
+            Debug.WriteLine(ex);
             return false;
         }
     }
@@ -65,13 +91,15 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     {
         try
         {
+            ArgumentNullException.ThrowIfNull(entity);
+
             _db.Remove(entity);
             await _context.SaveChangesAsync();
             return true;
         }
         catch (Exception ex)
         {
-            Debug.WriteLine(ex.Message);
+            Debug.WriteLine(ex);
             return false;
         }
     }

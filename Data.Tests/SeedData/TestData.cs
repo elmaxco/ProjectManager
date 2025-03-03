@@ -12,9 +12,9 @@ public class TestData
     
     public static readonly CustomerEntity[] CustomerEntities =
     [
-        new CustomerEntity {Id = 1, CustomerName = "Nackademin AB", Email = "Nackademin@domain.com" },
-        new CustomerEntity {Id = 2, CustomerName = "Saab AB", Email = "Saab@domain.com" },
-        new CustomerEntity {Id = 3, CustomerName = "Ericsson AB", Email = "Ericsson@domain.com"  }
+        new CustomerEntity {Id = 1, CustomerName = "Nackademin AB", },
+        new CustomerEntity {Id = 2, CustomerName = "Saab AB", },
+        new CustomerEntity {Id = 3, CustomerName = "Ericsson AB", }
     ];
 
     public static readonly EmployeeEntity[] EmployeeEntities =

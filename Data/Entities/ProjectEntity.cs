@@ -1,7 +1,10 @@
-﻿namespace Data.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Data.Entities;
 
 public class ProjectEntity
 {
+    [Key]
     public int Id { get; set; }
     public string ProjectName { get; set; } = null!;
     public string? Description { get; set; }
@@ -10,12 +13,14 @@ public class ProjectEntity
     public DateTime? EndDate { get; set; }
     public CustomerEntity Customer { get; set; } = null!;
     public StatusEntity Status { get; set; } = null!;
-    public int StatusId { get; set; }
+    public int StatusId { get; set; }    
     public int ProjectManagerId { get; set; }
-    public EmployeeEntity ProjectManager { get; set; } = null!;
+    public EmployeeEntity? ProjectManager { get; set; } 
     public int ProjectTypeId { get; set; }
     public ProjectTypeEntity ProjectType { get; set; } = null!;
+    
 
 }
+
 
 

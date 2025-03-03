@@ -12,8 +12,8 @@ public class CustomerRepository(DataContext context) : BaseRepository<CustomerEn
     {
         var entity = await _db
             .Include(x => x.Projects)
-            .FirstOrDefaultAsync(expression);
+            .FirstOrDefaultAsync(expression);     
 
-        return entity;
+            return entity;
     }
 }

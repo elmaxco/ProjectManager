@@ -1,14 +1,14 @@
 ﻿using Business.Dtos;
 using Business.Models;
 
-namespace Business.Interfaces
+namespace Business.Services
 {
     public interface IProjectService
     {
-        Task<Project?> CreateProjectAsync(ProjectRegistarationForm form);
-        Task<bool> DeleteProjectAsync(Project project);
+        Task<bool> CreateProjectAsync(ProjectRegistarationForm form);
+        Task<Project?> GetProjectAsync(int id);
         Task<IEnumerable<Project?>> GetProjectsAsync();
-        Task<Project?> GetProjectsAsync(int id);
-        Task<bool> UpdateProjectAsync(Project project);
+        Task<bool> RemoveProjectAsync(Project project);
+        Task<bool> UpdateProjectAsync(ProjectUpdate form);
     }
 }

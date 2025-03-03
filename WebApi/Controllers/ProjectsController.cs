@@ -1,6 +1,7 @@
 ﻿using Business.Dtos;
 using Business.Interfaces;
 using Business.Models;
+using Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,51 +15,49 @@ public class ProjectsController(IProjectService projectService) : ControllerBase
     private readonly IProjectService _projectService = projectService;
 
     [HttpPost]
-
-    public async Task<IActionResult> CreateProject(ProjectRegistarationForm form)
+    public async Task<IActionResult> CreateProject([FromBody]ProjectRegistarationForm form)
     {
         if (!ModelState.IsValid && form.CustomerId < 1)
-            return BadRequest(ModelState);
+            return BadRequest();
 
-        var project = await _projectService.CreateProjectAsync(form);
-        return project == null ? BadRequest() : Ok(project);
-
+        var result = await _projectService.CreateProjectAsync(form);
+        return result ? Created("", null) : Problem();
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetProjects()
+    public async Task<IActionResult> GetAllProjects()
     {
-       var projects = await _projectService.GetProjectsAsync();
+        var projects = await _projectService.GetProjectsAsync();
         return Ok(projects);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProject(int id)
     {
-        var projects = await _projectService.GetProjectsAsync(id);
-        return projects != null ? Ok(projects) : NotFound();
+        var project = await _projectService.GetProjectAsync(id);
+        return project != null ? Ok(project) : NotFound();
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateProject(Project project)
+    public async Task<IActionResult> UpdateProject(ProjectUpdate form)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _projectService.UpdateProjectAsync(project);
-        return result ? Ok() : BadRequest();
+        var updatedProject = await _projectService.UpdateProjectAsync(form);
+        return updatedProject ? Ok() : BadRequest();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteProject(int id)
+    public async Task<IActionResult> RemoveProject(int id)
     {
-        var project = await _projectService.GetProjectsAsync(id);
+        var project = await _projectService.GetProjectAsync(id);
 
         if (project == null)
             return NotFound();
 
-        var result = await _projectService.DeleteProjectAsync(project);
-        return result ? Ok() : BadRequest();
+        var deletedProject = await _projectService.RemoveProjectAsync(project);
+        return deletedProject ? Ok() : BadRequest();
     }
 }
    

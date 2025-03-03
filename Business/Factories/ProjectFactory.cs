@@ -20,6 +20,19 @@ public static class ProjectFactory
         ProjectTypeId = form.ProjectTypeId
     };
 
+    public static ProjectEntity Map(ProjectUpdate form) => new()
+    {
+        Id = form.Id,
+        ProjectName = form.ProjectName,
+        Description = form.Description,
+        StartDate = form.StartDate,
+        EndDate = form.EndDate,
+        StatusId = form.StatusId,
+        CustomerId = form.CustomerId,
+        ProjectManagerId = form.ProjectManagerId,
+        ProjectTypeId = form.ProjectTypeId
+    };
+
 
 
     public static Project? Map(ProjectEntity entity) => entity == null ? null : new Project
@@ -29,7 +42,7 @@ public static class ProjectFactory
         ProjectName = entity.ProjectName,
         Description = entity.Description,
         StartDate = entity.StartDate,
-        EndDate = entity.EndDate,
+        EndDate = entity.EndDate,       
         Status = StatusFactory.Map(entity.Status),
         Customer = CustomerFactory.Map(entity.Customer),
         ProjectManager = EmployeeFactory.Map(entity.ProjectManager),
