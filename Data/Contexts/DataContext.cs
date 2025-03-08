@@ -19,5 +19,5 @@ public class DataContext : DbContext
     public DbSet<ProjectTypeEntity> ProjectType { get; set; }
     public DbSet<StatusEntity> Statuses { get; set; }
 
-
+    
 }

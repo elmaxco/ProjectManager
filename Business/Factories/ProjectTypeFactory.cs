@@ -9,8 +9,7 @@ public static class ProjectTypeFactory
     {
         Id = entity.Id,
         TypeName = entity.TypeName,
-        Price = entity.Price,
-        PricingUnit = entity.PricingUnit
+        
     };
 }
 

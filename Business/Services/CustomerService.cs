@@ -16,7 +16,7 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
         {
             ArgumentNullException.ThrowIfNull(form);
 
-            var entity = CustomerFactory.Map(form);
+            var entity = CustomerFactory.Create(form);
             if (entity == null)
                 return null!;
 
@@ -37,8 +37,8 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
     public async Task<IEnumerable<Customer>> GetAllCustomerAsync()
     {
         var entities = await _customerRepository.GetAllAsync();
-        var customers = entities.Select(CustomerFactory.Map);
-        return customers;
+        var customers = entities.Select(CustomerFactory.Map).Where(c => c != null)!;
+        return customers!;
     }
 
     public async Task<Customer> GetCustomerAsync(int id)
@@ -47,7 +47,7 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
         if (entities == null)
             return null!;
         var customers = CustomerFactory.Map(entities);
-        return customers;
+        return customers!;
     }
 
     public async Task<bool> UpdateCustomerAsync(CustomerUpdate form)
@@ -56,7 +56,7 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
         {
             ArgumentNullException.ThrowIfNull(form);
 
-            var entity = CustomerFactory.Map(form);
+            var entity = CustomerFactory.Create(form);
             if (entity == null)
                 return false;
 

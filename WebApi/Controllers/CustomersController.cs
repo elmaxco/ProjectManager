@@ -49,9 +49,9 @@ public class CustomerController(ICustomerService customerService) : ControllerBa
     [HttpDelete("{id}")]
     public async Task<IActionResult> RemoveProject(int id)
     {
-        var project = await _customerService.GetCustomerAsync(id);
+        var customer = await _customerService.GetCustomerAsync(id);
 
-        if (project == null)
+        if (customer == null)
             return NotFound();
 
         var deleted = await _customerService.DeleteCustomerAsync(customer);

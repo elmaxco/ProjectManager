@@ -16,7 +16,7 @@ public static class ProjectFactory
         EndDate = form.EndDate,
         StatusId = form.StatusId,
         CustomerId = form.CustomerId,
-        ProjectManagerId = form.ProjectManagerId,
+       
         ProjectTypeId = form.ProjectTypeId
     };
 
@@ -28,8 +28,7 @@ public static class ProjectFactory
         StartDate = form.StartDate,
         EndDate = form.EndDate,
         StatusId = form.StatusId,
-        CustomerId = form.CustomerId,
-        ProjectManagerId = form.ProjectManagerId,
+        CustomerId = form.CustomerId,        
         ProjectTypeId = form.ProjectTypeId
     };
 
@@ -65,8 +64,7 @@ public static class ProjectFactory
                 StartDate = project.StartDate,
                 EndDate = project.EndDate,
                 StatusId = project.Status!.Id,
-                CustomerId = project.Customer!.Id,
-                ProjectManagerId = project.ProjectManager!.Id,
+                CustomerId = project.Customer!.Id,               
                 ProjectTypeId = project.ProjectType!.Id
             };
             return entity;

@@ -16,19 +16,36 @@ public class ProjectService(IProjectRepository projectRepository, ICustomerRepos
     private readonly ICustomerRepository _customerRepository = customerRepository;
     public async Task<bool> CreateProjectAsync(ProjectRegistarationForm form)
     {
+        try
+        {
+            ArgumentNullException.ThrowIfNull(form);
 
-        if (!await _customerRepository.ExistsAsync(customer => customer.Id == form.CustomerId))
+            var entity = ProjectFactory.Map(form);
+
+            if (!await _customerRepository.ExistsAsync(customer => customer.Id == form.CustomerId))
+                return false;
+
+            if (entity == null)
+                return false;
+
+            entity = await _projectRepository.AddAsync(entity);
+
+
+            if (entity == null)
+                return false;
+
+            return true;
+
+
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
             return false;
-
-        var projectEntity = ProjectFactory.Map(form);
-        if (projectEntity == null)
-            return false;
-
-        bool result = await _projectRepository.AddAsync(projectEntity); 
-        return result;
+        }
     }
 
-    public async Task<IEnumerable<Project?>> GetProjectsAsync()
+    public async Task<IEnumerable<Project?>> GetAllProjectsAsync()
     {
         var entities = await _projectRepository.GetAllAsync();
         var projects = entities.Select(ProjectFactory.Map);
@@ -45,13 +62,13 @@ public class ProjectService(IProjectRepository projectRepository, ICustomerRepos
         return project;
     }
 
-    public async Task<bool> UpdateProjectAsync(Project project)
+    public async Task<bool> UpdateProjectAsync(ProjectUpdate form)
     {
         try
         {
-            ArgumentNullException.ThrowIfNull(project);
+            ArgumentNullException.ThrowIfNull(form);
 
-            var projectEntity = ProjectFactory.Map(project);
+            var projectEntity = ProjectFactory.Map(form);
 
             if (projectEntity == null)
                 return false;

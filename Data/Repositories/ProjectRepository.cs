@@ -14,7 +14,7 @@ public class ProjectRepository(DataContext context) : BaseRepository<ProjectEnti
         try
         {
 
-            var entities = await _db
+            var entities = await _context.Project
                .Include(x => x.Customer)
                .Include(x => x.ProjectManager)
                .Include(x => x.ProjectType)
@@ -38,7 +38,7 @@ public class ProjectRepository(DataContext context) : BaseRepository<ProjectEnti
                 .Include(x => x.ProjectManager)
                 .Include(x => x.ProjectType)
                 .Include(x => x.Status)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(expression);
             return entity;
         }
         catch (Exception ex)

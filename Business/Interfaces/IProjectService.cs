@@ -7,7 +7,7 @@ namespace Business.Services
     {
         Task<bool> CreateProjectAsync(ProjectRegistarationForm form);
         Task<Project?> GetProjectAsync(int id);
-        Task<IEnumerable<Project?>> GetProjectsAsync();
+        Task<IEnumerable<Project?>> GetAllProjectsAsync();
         Task<bool> RemoveProjectAsync(Project project);
         Task<bool> UpdateProjectAsync(ProjectUpdate form);
     }

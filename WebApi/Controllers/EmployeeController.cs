@@ -13,8 +13,8 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var employees = await _employeeService.GetEmployeeAsync();
-            return Ok(employees);
+            var result = await _employeeService.GetEmployeeAsync();
+            return Ok(result);
         }
     }
 }

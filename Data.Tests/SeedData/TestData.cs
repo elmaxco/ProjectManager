@@ -26,14 +26,14 @@ public class TestData
 
     public static readonly ProjectEntity[] ProjectEntities =
     [
-        new ProjectEntity {ProjectName = "Databasteknik", Description = "Databaser", StartDate = new DateTime(2025, 02, 03), EndDate = new DateTime(2025, 02, 28), StatusId = 2, CustomerId = 1, ProjectManagerId = 1, ProjectTypeId = 1 }
+        new ProjectEntity {ProjectName = "Databasteknik", Description = "Databaser", StartDate = new DateTime(2025, 02, 03), EndDate = new DateTime(2025, 02, 28), StatusId = 2, CustomerId = 1,   }
     ];
 
     public static readonly ProjectTypeEntity[] ProjectTypeEntities =
     [
-            new ProjectTypeEntity {Id = 1, TypeName = "Webbprojekt", Price = 100, PricingUnit = "Tim" },
-            new ProjectTypeEntity {Id = 2, TypeName = "Mjukvaruprojekt", Price = 100, PricingUnit = "Tim" },
-            new ProjectTypeEntity {Id = 3, TypeName = "Övrigt", Price = 100, PricingUnit = "Tim" }
+            new ProjectTypeEntity {Id = 1, TypeName = "Webbprojekt",  },
+            new ProjectTypeEntity {Id = 2, TypeName = "Mjukvaruprojekt",  },
+            new ProjectTypeEntity {Id = 3, TypeName = "Övrigt",  }
     ];
 
     public static readonly StatusEntity[] StatusEntities =
