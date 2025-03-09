@@ -20,8 +20,7 @@ public class ProjectEntity
     public ProjectTypeEntity ProjectType { get; set; } = null!;
 
     
-    public EmployeeEntity? ProjectManager { get; set; } 
-    
+        
 }
 
 

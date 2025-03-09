@@ -15,8 +15,7 @@ public class ProjectRepository(DataContext context) : BaseRepository<ProjectEnti
         {
 
             var entities = await _context.Project
-               .Include(x => x.Customer)
-               .Include(x => x.ProjectManager)
+               .Include(x => x.Customer)               
                .Include(x => x.ProjectType)
                .Include(x => x.Status)
                .ToListAsync();
@@ -34,8 +33,7 @@ public class ProjectRepository(DataContext context) : BaseRepository<ProjectEnti
         try
         {
             var entity = await _context.Project
-                .Include(x => x.Customer)
-                .Include(x => x.ProjectManager)
+                .Include(x => x.Customer)                
                 .Include(x => x.ProjectType)
                 .Include(x => x.Status)
                 .FirstOrDefaultAsync(expression);

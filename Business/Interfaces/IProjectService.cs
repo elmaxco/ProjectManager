@@ -9,6 +9,6 @@ namespace Business.Services
         Task<Project?> GetProjectAsync(int id);
         Task<IEnumerable<Project?>> GetAllProjectsAsync();
         Task<bool> RemoveProjectAsync(Project project);
-        Task<bool> UpdateProjectAsync(ProjectUpdate form);
+        Task<Project> UpdateProjectAsync(ProjectUpdate form);
     }
 }

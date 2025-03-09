@@ -9,7 +9,7 @@ public class ProjectRegistarationForm
     
     public int CustomerId { get; set; }
     public int StatusId { get; set; }
-    public int ProjectManagerId { get; set; }
+    
     public int ProjectTypeId { get; set; }
 
 }

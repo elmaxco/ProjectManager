@@ -43,8 +43,7 @@ public static class ProjectFactory
         StartDate = entity.StartDate,
         EndDate = entity.EndDate,       
         Status = StatusFactory.Map(entity.Status),
-        Customer = CustomerFactory.Map(entity.Customer),
-        ProjectManager = EmployeeFactory.Map(entity.ProjectManager),
+        Customer = CustomerFactory.Map(entity.Customer),       
         ProjectType = ProjectTypeFactory.Map(entity.ProjectType)
 
     };

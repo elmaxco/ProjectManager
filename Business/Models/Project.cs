@@ -13,11 +13,8 @@ public class Project
 
     public Status? Status { get; set; }
     public Customer Customer { get; set; } = null!;
-    public int CustomerId { get; set; }
-
- 
-    public Employee? ProjectManager { get; set; }  // Navigation Property
-    
+    public int CustomerId { get; set; } 
+       
     public ProjectType? ProjectType { get; set; }
 }
 
